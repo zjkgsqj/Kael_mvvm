@@ -12,7 +12,7 @@ public class MainViewModel implements ViewModel{
     public MainViewModel(Context context) {
         this.context = context;
         this.mainText = new ObservableField<>();
-        setText();
+        //setText();
     }
 
     @Override
