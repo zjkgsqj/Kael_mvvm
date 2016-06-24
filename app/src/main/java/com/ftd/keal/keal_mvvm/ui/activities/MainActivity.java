@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTabHost;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,14 +18,14 @@ import android.view.View;
 
 import com.ftd.keal.keal_mvvm.R;
 import com.ftd.keal.keal_mvvm.databinding.ActivityMainBinding;
+import com.ftd.keal.keal_mvvm.ui.adapters.MainViewPagerAdapter;
 import com.ftd.keal.keal_mvvm.ui.fragments.ItemFragment;
-import com.ftd.keal.keal_mvvm.ui.fragments.dummy.DummyContent;
 import com.ftd.keal.keal_mvvm.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,ItemFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
     private MainViewModel mainViewModel;
-    private FragmentTabHost mTabHost = null;
+    //private FragmentTabHost mTabHost = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity
         binding.setViewModel(mainViewModel);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,13 +58,28 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-        mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
 
-        mTabHost.addTab(mTabHost.newTabSpec("0").setIndicator("新闻"), ItemFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("1").setIndicator("音乐"), ItemFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("2").setIndicator("电影"), ItemFragment.class, null);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+//        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+//        mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+//
+//        mTabHost.addTab(mTabHost.newTabSpec("0").setIndicator("新闻"), ItemFragment.class, null);
+//        mTabHost.addTab(mTabHost.newTabSpec("1").setIndicator("音乐"), ItemFragment.class, null);
+//        mTabHost.addTab(mTabHost.newTabSpec("2").setIndicator("电影"), ItemFragment.class, null);
     }
+
+    private void setupViewPager(ViewPager viewPager) {
+        MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new ItemFragment(), "新闻");
+        adapter.addFrag(new ItemFragment(), "音乐");
+        adapter.addFrag(new ItemFragment(), "电影");
+        viewPager.setAdapter(adapter);
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -73,6 +90,8 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,8 +146,4 @@ public class MainActivity extends AppCompatActivity
         mainViewModel.destroy();
     }
 
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
 }
