@@ -7,10 +7,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by sdhuang on 16/6/24 16:59.
  */
-public class RetrofitProvider {
+public class NewsRetrofitProvider {
     private static Retrofit retrofit;
 
-    private RetrofitProvider() {
+    private NewsRetrofitProvider() {
     }
 
     public static Retrofit getInstance() {
