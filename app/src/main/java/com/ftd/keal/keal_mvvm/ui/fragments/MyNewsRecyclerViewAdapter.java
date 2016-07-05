@@ -1,78 +1,64 @@
 package com.ftd.keal.keal_mvvm.ui.fragments;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.ftd.keal.keal_mvvm.R;
-import com.ftd.keal.keal_mvvm.ui.fragments.ItemFragment.OnListFragmentInteractionListener;
-import com.ftd.keal.keal_mvvm.ui.fragments.dummy.DummyContent.DummyItem;
+import com.ftd.keal.keal_mvvm.databinding.FragmentNewsItemBinding;
+import com.ftd.keal.keal_mvvm.model.NewsBean;
+import com.ftd.keal.keal_mvvm.viewmodel.NewsItemViewModel;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
+ *
  */
 public class MyNewsRecyclerViewAdapter extends RecyclerView.Adapter<MyNewsRecyclerViewAdapter.ViewHolder> {
+    private List<NewsBean> mList;
 
-    private final List<DummyItem> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    public MyNewsRecyclerViewAdapter(List<NewsBean> list) {
+        this.mList = list;
+    }
 
-    public MyNewsRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
-        mListener = listener;
+    public void setData(List<NewsBean> list){
+        this.mList = list;
+        notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
-        return new ViewHolder(view);
+         FragmentNewsItemBinding binding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.getContext()),
+                R.layout.fragment_news_item,parent,false);
+        return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+        holder.bindRepository(mList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        final FragmentNewsItemBinding binding;
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+        public ViewHolder(FragmentNewsItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+        void bindRepository(NewsBean newsBean) {
+            if (binding.getViewModel() == null) {
+                binding.setViewModel(new NewsItemViewModel(itemView.getContext(), newsBean));
+            } else {
+                binding.getViewModel().setData(newsBean);
+            }
         }
     }
 }

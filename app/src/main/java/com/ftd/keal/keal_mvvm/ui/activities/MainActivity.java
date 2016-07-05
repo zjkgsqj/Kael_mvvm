@@ -19,7 +19,7 @@ import android.view.View;
 import com.ftd.keal.keal_mvvm.R;
 import com.ftd.keal.keal_mvvm.databinding.ActivityMainBinding;
 import com.ftd.keal.keal_mvvm.ui.adapters.MainViewPagerAdapter;
-import com.ftd.keal.keal_mvvm.ui.fragments.ItemFragment;
+import com.ftd.keal.keal_mvvm.ui.fragments.NewsListFragment;
 import com.ftd.keal.keal_mvvm.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity
@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new ItemFragment(), "新闻");
-        adapter.addFrag(new ItemFragment(), "音乐");
-        adapter.addFrag(new ItemFragment(), "电影");
+        adapter.addFrag(new NewsListFragment(), "新闻");
+        adapter.addFrag(new NewsListFragment(), "音乐");
+        adapter.addFrag(new NewsListFragment(), "电影");
         viewPager.setAdapter(adapter);
     }
 
