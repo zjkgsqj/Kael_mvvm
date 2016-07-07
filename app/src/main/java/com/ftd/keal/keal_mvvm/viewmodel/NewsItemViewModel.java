@@ -32,7 +32,7 @@ public class NewsItemViewModel implements ViewModel{
         this.newsBean = bean;
         title.set(newsBean.getTitle());
         imageUrl.set(newsBean.getImages().get(0));
-        date.set(newsBean.getExtraField().getDate());
+        //date.set(newsBean.getExtraField().getDate());
         titleTextColor.set(mContext.getResources().getColor(android.R.color.black));
     }
 
