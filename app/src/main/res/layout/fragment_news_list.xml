@@ -30,6 +30,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:refreshing="@{viewModel.isRefreshing}"
+            bind:onRefreshAction="@{viewModel.onRefreshAction}"
             bind:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView

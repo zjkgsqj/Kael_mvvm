@@ -9,6 +9,7 @@ import android.view.View;
 import com.ftd.keal.keal_mvvm.model.NewsListResponse;
 import com.ftd.keal.keal_mvvm.retrofit.NewsRetrofitProvider;
 import com.ftd.keal.keal_mvvm.retrofit.NewsService;
+import com.ftd.keal.keal_mvvm.retrofit.command.ViewAction;
 import com.ftd.keal.keal_mvvm.ui.interfaces.onDataLoadedListener;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ import java.util.Calendar;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 
 /**
@@ -40,14 +42,13 @@ public class NewsListViewModel implements ViewModel{
         loadNews(new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime()));
     }
 
-    @Override
-    public void destroy() {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+    public ViewAction onRefreshAction = new ViewAction(new Action0() {
+        @Override
+        public void call() {
+            isRefreshing.set(true);
+            loadNews(new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime()));
         }
-        subscription = null;
-        context = null;
-    }
+    });
 
     private void loadNews(String date){
         subscription = NewsRetrofitProvider.getInstance().create(NewsService.class)
@@ -58,12 +59,18 @@ public class NewsListViewModel implements ViewModel{
                     @Override
                     public void onCompleted() {
                         progressVisibility.set(View.GONE);
+                        if(isRefreshing.get()){
+                            isRefreshing.set(false);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable error) {
                         Log.e(TAG, "Error loading response ", error);
                         progressVisibility.set(View.GONE);
+                        if(isRefreshing.get()){
+                            isRefreshing.set(false);
+                        }
                     }
 
                     @Override
@@ -75,18 +82,12 @@ public class NewsListViewModel implements ViewModel{
                 });
     }
 
-//    public final ReplyCommand onRefreshCommand = new ReplyCommand<>(() -> {
-//        Observable.just(Calendar.getInstance())
-//                .doOnNext(c -> c.add(Calendar.DAY_OF_MONTH, 1))
-//                .map(c -> NewsListHelper.DAY_FORMAT.format(c.getTime()))
-//                .subscribe(d -> loadTopNews(d));
-//    });
-//
-//    public final ReplyCommand<Integer> onLoadMoreCommand = new ReplyCommand<Integer>(new Action1<Integer>(){
-//        @Override
-//        public void call(Integer integer) {
-//            loadNews(NewsResponse.getDate());
-//        }
-//    });
-
+    @Override
+    public void destroy() {
+        if (subscription != null && !subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+        subscription = null;
+        context = null;
+    }
 }
