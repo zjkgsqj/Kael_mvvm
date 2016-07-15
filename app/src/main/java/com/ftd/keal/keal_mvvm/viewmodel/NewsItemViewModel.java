@@ -1,11 +1,13 @@
 package com.ftd.keal.keal_mvvm.viewmodel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.view.View;
 
 import com.ftd.keal.keal_mvvm.model.NewsBean;
+import com.ftd.keal.keal_mvvm.ui.activities.NewsDetailActivity;
 
 /**
  * Created by sdhuang on 16/7/5 11:22.
@@ -38,6 +40,9 @@ public class NewsItemViewModel implements ViewModel{
 
     public void onItemClick(View view) {
         titleTextColor.set(mContext.getResources().getColor(android.R.color.darker_gray));
+        Intent intent = new Intent(mContext, NewsDetailActivity.class);
+        intent.putExtra(NewsDetailActivity.EXTRA_KEY_NEWS_ID, newsBean.getId());
+        mContext.startActivity(intent);
     }
 
     @Override

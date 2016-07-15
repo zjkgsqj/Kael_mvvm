@@ -4,6 +4,8 @@ import android.databinding.BindingAdapter;
 import android.net.Uri;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.webkit.WebView;
+
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.ftd.keal.keal_mvvm.retrofit.command.ViewAction;
 
@@ -28,5 +30,12 @@ public class ViewBindingAdapter {
                 }
             }
         });
+    }
+
+    @BindingAdapter({"render"})
+    public static void loadHtml(WebView webView, final String html) {
+        if (!TextUtils.isEmpty(html)) {
+            webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
+        }
     }
 }
