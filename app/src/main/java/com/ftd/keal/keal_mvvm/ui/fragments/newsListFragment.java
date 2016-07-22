@@ -13,6 +13,7 @@ import com.ftd.keal.keal_mvvm.R;
 import com.ftd.keal.keal_mvvm.databinding.FragmentNewsListBinding;
 import com.ftd.keal.keal_mvvm.model.NewsBean;
 import com.ftd.keal.keal_mvvm.model.NewsListResponse;
+import com.ftd.keal.keal_mvvm.ui.bindingadapters.MyNewsRecyclerViewAdapter;
 import com.ftd.keal.keal_mvvm.ui.interfaces.onDataLoadedListener;
 import com.ftd.keal.keal_mvvm.viewmodel.NewsListViewModel;
 

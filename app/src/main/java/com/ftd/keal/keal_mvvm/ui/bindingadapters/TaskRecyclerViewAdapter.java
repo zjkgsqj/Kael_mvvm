@@ -1,4 +1,4 @@
-package com.ftd.keal.keal_mvvm.ui.fragments;
+package com.ftd.keal.keal_mvvm.ui.bindingadapters;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
@@ -15,10 +15,10 @@ import java.util.List;
 /**
  *
  */
-public class MyNewsRecyclerViewAdapter extends RecyclerView.Adapter<MyNewsRecyclerViewAdapter.ViewHolder> {
+public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
     private List<NewsBean> mList;
 
-    public MyNewsRecyclerViewAdapter(List<NewsBean> list) {
+    public TaskRecyclerViewAdapter(List<NewsBean> list) {
         this.mList = list;
     }
 

@@ -21,8 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.NewsDetailActivity"
-            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".ui.activities.NewsDetailActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.activities.DownloadActivity"></activity>
     </application>
 
 </manifest>
