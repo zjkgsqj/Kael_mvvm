@@ -1,5 +1,6 @@
 package com.ftd.keal.keal_mvvm.ui.activities;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -122,17 +123,18 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+            startActivity(new Intent(MainActivity.this,DownloadActivity.class));
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            startActivity(new Intent(MainActivity.this,DownloadActivity.class));
         } else if (id == R.id.nav_slideshow) {
-
+            startActivity(new Intent(MainActivity.this,DownloadActivity.class));
         } else if (id == R.id.nav_manage) {
-
+            startActivity(new Intent(MainActivity.this,DownloadActivity.class));
         } else if (id == R.id.nav_share) {
-
+            startActivity(new Intent(MainActivity.this,DownloadActivity.class));
         } else if (id == R.id.nav_send) {
-
+            startActivity(new Intent(MainActivity.this,DownloadActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
