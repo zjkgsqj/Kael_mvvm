@@ -13,7 +13,6 @@ import com.ftd.keal.keal_mvvm.ui.adapters.TaskItemAdapter;
 import com.ftd.keal.keal_mvvm.ui.download.TasksManager;
 import com.ftd.keal.keal_mvvm.ui.interfaces.onDataLoadedListener;
 import com.ftd.keal.keal_mvvm.viewmodel.DownloadViewModel;
-import com.liulishuo.filedownloader.FileDownloader;
 
 import java.lang.ref.WeakReference;
 
@@ -60,8 +59,8 @@ public class DownloadActivity extends AppCompatActivity implements onDataLoadedL
     protected void onDestroy() {
         super.onDestroy();
         viewModel.destroy();
-        TasksManager.getImpl().onDestroy();
+        //TasksManager.getImpl().onDestroy();
         adapter = null;
-        FileDownloader.getImpl().pauseAll();
+        //FileDownloader.getImpl().pauseAll();
     }
 }
