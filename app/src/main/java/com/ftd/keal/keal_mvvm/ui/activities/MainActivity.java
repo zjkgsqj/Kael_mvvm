@@ -2,11 +2,14 @@ package com.ftd.keal.keal_mvvm.ui.activities;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,11 +24,13 @@ import com.ftd.keal.keal_mvvm.R;
 import com.ftd.keal.keal_mvvm.databinding.ActivityMainBinding;
 import com.ftd.keal.keal_mvvm.ui.adapters.MainViewPagerAdapter;
 import com.ftd.keal.keal_mvvm.ui.fragments.NewsListFragment;
+import com.ftd.keal.keal_mvvm.ui.fragments.ThemeFragment;
 import com.ftd.keal.keal_mvvm.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener,ThemeFragment.OnFragmentInteractionListener {
     private MainViewModel mainViewModel;
+    public static final String FRAGMENT_TAG = "FRAGMENT_CONTAINER";
     //private FragmentTabHost mTabHost = null;
 
     @Override
@@ -92,7 +97,20 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * 添加一个fragment
+     *
+     * @param fragment
+     * @param tag
+     */
+    protected void addRootFragment(Fragment fragment, String tag) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
+        ft.add(R.id.fragment_container, fragment, tag);
+
+        ft.commitAllowingStateLoss();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -130,7 +148,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
             startActivity(new Intent(MainActivity.this,DownloadActivity.class));
         } else if (id == R.id.nav_manage) {
-            startActivity(new Intent(MainActivity.this,DownloadActivity.class));
+            addRootFragment(new ThemeFragment(),FRAGMENT_TAG);
         } else if (id == R.id.nav_share) {
             startActivity(new Intent(MainActivity.this,DownloadActivity.class));
         } else if (id == R.id.nav_send) {
@@ -148,4 +166,8 @@ public class MainActivity extends AppCompatActivity
         mainViewModel.destroy();
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
