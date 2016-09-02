@@ -25,6 +25,13 @@
             android:name=".ui.activities.NewsDetailActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".ui.activities.DownloadActivity"></activity>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden"
+            android:configChanges="keyboardHidden|orientation"
+            android:name=".ui.activities.FragmentContainerActivity">
+        </activity>
     </application>
 
 </manifest>
